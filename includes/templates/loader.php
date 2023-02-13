@@ -1,0 +1,5 @@
+<div class="container-loader">
+<span class="loader">
+
+</span>
+</div>

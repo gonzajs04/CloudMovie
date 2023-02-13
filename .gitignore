@@ -1,0 +1,7 @@
+src/
+vendor/
+database.sql
+gulpfile.js
+package.json
+package-lock.json
+.env
