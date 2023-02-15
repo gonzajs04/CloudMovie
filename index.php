@@ -86,7 +86,7 @@ $resultadoPeliculas  = mysqli_query($db, $query);
         <div class="visto-grid">
             <?php while ($visto = mysqli_fetch_assoc($resultado)) { ?>
                 <div class="peliculas-visto">
-                    <a href="pelicula.php" target="_blank">
+                    <a href="pelicula.php?resultado=<?php echo $visto['id']?>" target="_blank">
 
                     <?php $directorio = file_exists(CARPETA_BUILD . $visto['imagen']);
                     if($directorio){

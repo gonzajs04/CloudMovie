@@ -98,7 +98,12 @@ while($pelicula = mysqli_fetch_assoc($resultado)){
 
     </div>
 
-    <div class="background-generals background">
+    <div class="background">
+        <picture>
+       
+            <source srcset="build/img/<?php echo $imagenPelicula;?>" type="image/webp">
+            <img loading ="lazy" src="build/img/<?php echo $imagenPelicula;?>.jpg" alt="">
+        </picture>
             
     </div>
 
