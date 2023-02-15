@@ -2,7 +2,7 @@
 <footer class="footer">
 
 <div class="footer-contenido">
-    <p>const page = new Page("<span>CloudMovie</span> &copy , Developed by Gonzalo Hernandez")</p>
+    <p>const page = new Page("<span>CloudMovie</span> &copy , Developed by Gonzalo Hernandez",<?php echo $date = date("Y");?>)</p>
 </div>
 
 
