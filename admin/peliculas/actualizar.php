@@ -24,17 +24,8 @@ $descripcion = $pelicula['descripcion'];
 $lanzamiento = $pelicula['lanzamiento'];
 $duracion = $pelicula['duracion'];
 $director = $pelicula['idDirector'];
-$imagen = $pelicula['imagen'];
+$imagenSql = $pelicula['imagen'];
 
-
-
-
-$sql = "SELECT g.id FROM generos as g, peliculas as p, generos_peliculas as gp WHERE gp.idPelicula = p.id AND gp.idGenero=g.id AND p.id = $id";
-$resultado = mysqli_query($db,$sql);
-
-// while($generos = mysqli_fetch_assoc($resultado)){
-  
-// };
 
 if($_POST != []){
 
@@ -60,9 +51,9 @@ if($_POST != []){
             mkdir(CARPETA_IMAGENES);
         }
       
-        if(file_exists(CARPETA_IMAGENES . $imagen)){
+        if(file_exists(CARPETA_IMAGENES . $imagenSql)){
 
-             unlink(CARPETA_IMAGENES . $imagen);
+             unlink(CARPETA_IMAGENES . $imagenSql);
 
              $sql = "UPDATE peliculas as p, directores as d SET p.nombre = '$titulo', p.descripcion='$descripcion', p.lanzamiento='$lanzamiento',p.duracion='$duracion',p.idDirector='$director', p.imagen='$nombreImg' WHERE p.idDirector = d.id and p.id=$id and d.id=$director";
 

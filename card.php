@@ -27,7 +27,7 @@
                         
                         </picture>
                       
-
+                        </a>
                         <div class="container-texto">
                              <h3 class=""><?php echo $peliculas['nombre'] ?></h3>
                                  <hr class="hr_pelis">
@@ -35,12 +35,12 @@
                    
                                 <div class="container-descripcion">
                                     <p><?php echo $peliculas['descripcion'];?></p>
-                            
+                                    <button class="btn-mas">Ver mas</button>
+
                                  
                                </div>
                         </div>
                   
 
-                        </a>
-                        <button class="btn-mas">Ver mas</button>
+                 
         </div>
