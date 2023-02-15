@@ -14,10 +14,11 @@ if($_POST != []){
    $lanzamiento = mysqli_real_escape_string($db,$_POST['lanzamiento']);
    $duracion = mysqli_real_escape_string($db,$_POST['duracion']);
    $director =mysqli_real_escape_string($db,$_POST['director']);
+   $urlTrailer = $_POST['trailer'];
 
     $generos = getGenerosSeleccionados($_POST['generos']); //OBTENGO TODOS LOS GENEROS SELECCIONADOS DE CHECKBOX | FORMA PARTE DEL FORMULARIO
    
-   $errores = getErrores($titulo,$descripcion,$lanzamiento,$duracion,$director,$_FILES['imagen']['tmp_name'],$generos);
+   $errores = getErrores($titulo,$descripcion,$lanzamiento,$duracion,$director,$_FILES['imagen']['tmp_name'],$trailer,$generos);
 
 
    if(empty($errores)){
@@ -37,6 +38,10 @@ if($_POST != []){
         $resultado  = mysqli_query($db,$sql);
         $id = mysqli_fetch_assoc($resultado);
         $maxId = intval($id['max(id)']);
+
+
+        $sql = "INSERT INTO trailers(idPelicula,urlTrailer) values('$maxId',$trailer)"; //inserto trailer
+        $resultado = mysqli_query($db,$sql);
 
     
 
@@ -59,7 +64,7 @@ if($_POST != []){
 
 
 ?>
-
+</header>
 <section class="contenedor crear-pelicula">
 
 <form action="#" class="form-peliculas" method="POST" enctype="multipart/form-data">

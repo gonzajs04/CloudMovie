@@ -30,7 +30,7 @@ function debuguear($array){
 }
 
 
-function getErrores($titulo,$descripcion,$lanzamiento,$duracion,$director,$imagen,$generos) :array{
+function getErrores($titulo,$descripcion,$lanzamiento,$duracion,$director,$imagen,$trailer,$generos) :array{
 
  
     $errores = [];
@@ -58,6 +58,10 @@ function getErrores($titulo,$descripcion,$lanzamiento,$duracion,$director,$image
     if(!$imagen){
         $errores[] = 'Debe haber una imagen';
     }
+
+    if(!$trailer){
+        $errores[]="Debes ingresar un trailer para la pelicula";
+    }
     
     
         return $errores;
@@ -81,6 +85,29 @@ function getErrores($titulo,$descripcion,$lanzamiento,$duracion,$director,$image
         return $elementoSanitizado;
 
     }
+
+
+    function consultarTrailers($db,$id){
+        $sql = "SELECT urlTrailer from trailers as t, peliculas as p where p.id = t.idPelicula AND p.id = $id";
+        $resultado = mysqli_query($db,$sql);
+        $trailer = mysqli_fetch_assoc($resultado);
+        return $trailer;
+    
+    }
+
+    function insertGP($db,$id,$generos){ //inserta en generos_peliculas
+
+        foreach ($generos as $genero) {
+          
+            $sql = "INSERT INTO generos_peliculas(idGenero,idPelicula) VALUES('$genero','$id')";
+            $resultado = mysqli_query($db,$sql);
+    
+        }
+    
+    }
+    
+
+
     define('CARPETA_IMAGENES',__DIR__ . '/../imagenes/');
     define('CARPETA_BUILD', __DIR__ . './../build/img/' );
 

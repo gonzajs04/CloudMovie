@@ -6,12 +6,11 @@ $db = conectarDB();
 incluirTemplate('header');
 
 
-$idPelicula = intval($_GET['resultado']);
+$idPelicula = filter_var(intval($_GET['resultado']),FILTER_SANITIZE_NUMBER_INT);
 if($idPelicula){
-$idPeliculaS = filter_var($idPelicula,FILTER_SANITIZE_NUMBER_INT);
 
 $sql = "SELECT   p.nombre, p.descripcion, p.imagen, d.nombre_director, d.apellido_director,p.likes,p.duracion FROM  peliculas as p, directores as d
- WHERE  d.id = p.idDirector AND p.id = $idPeliculaS ";
+ WHERE  d.id = p.idDirector AND p.id = $idPelicula ";
 
 $resultado = mysqli_query($db,$sql);
 
@@ -28,6 +27,8 @@ while($pelicula = mysqli_fetch_assoc($resultado)){
 //PARA GENEROS HACER UN WHILE EXCLUSIVO YA QUE PUEDE TENER MAS DE UN GENERO LO MISMO PARA ACTORES Y ACTRICES Y PERSONAJES
 
 }
+
+$trailer = consultarTrailers($db,$idPelicula);
 
 }else{
     header('Location: /');
@@ -55,7 +56,7 @@ while($pelicula = mysqli_fetch_assoc($resultado)){
             <div class="content_stream">
                 <img src="" alt="">
                 <p>Ya esta al aire</p>
-                <a href="">
+                <a href="<?php echo $trailer['urlTrailer']?>">
                     <strong>Ver ahora</strong>
                 </a>
             </div>
@@ -66,7 +67,7 @@ while($pelicula = mysqli_fetch_assoc($resultado)){
             <ul>
                 
                 <?php
-                $sql = "SELECT g.nombre_genero from generos as g, generos_peliculas as gp where g.id = gp.idGenero AND gp.idPelicula = $idPeliculaS";
+                $sql = "SELECT g.nombre_genero from generos as g, generos_peliculas as gp where g.id = gp.idGenero AND gp.idPelicula = $idPelicula";
                 $resultado = mysqli_query($db,$sql);
                 
 
@@ -117,7 +118,7 @@ while($pelicula = mysqli_fetch_assoc($resultado)){
             <h2>Reparto</h2>
             <ol class="actors-scroll">
                 <?php 
-                $sql = "SELECT pe.nombre_personaje, a.nombre_actor,a.apellido_actor,a.imagen_actor from personajes as pe, actores as a , personajes_peliculas as pp where pe.id = pp.idPersonaje AND pp.idPelicula = $idPeliculaS AND a.id = pe.idActor";
+                $sql = "SELECT pe.nombre_personaje, a.nombre_actor,a.apellido_actor,a.imagen_actor from personajes as pe, actores as a , personajes_peliculas as pp where pe.id = pp.idPersonaje AND pp.idPelicula = $idPelicula AND a.id = pe.idActor";
 
                 $resultado = mysqli_query($db, $sql);
             

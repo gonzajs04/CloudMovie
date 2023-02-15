@@ -19,12 +19,23 @@ $sql ="SELECT p.nombre,p.descripcion,p.lanzamiento,p.imagen,p.duracion,p.idDirec
 
 $resultado = mysqli_query($db,$sql);
 $pelicula = mysqli_fetch_assoc($resultado);
+
+
+/////////////////////////////////////////
+
 $titulo = $pelicula['nombre'];
 $descripcion = $pelicula['descripcion'];
 $lanzamiento = $pelicula['lanzamiento'];
 $duracion = $pelicula['duracion'];
 $director = $pelicula['idDirector'];
 $imagenSql = $pelicula['imagen'];
+
+////////////////////////////////////////////////
+
+$trailer = consultarTrailers($db,$id);
+
+$urlTrailer = $trailer['urlTrailer'];
+
 
 
 if($_POST != []){
@@ -35,10 +46,11 @@ if($_POST != []){
    $lanzamiento = mysqli_real_escape_string($db,$_POST['lanzamiento']);
    $duracion = mysqli_real_escape_string($db,$_POST['duracion']);
    $director =mysqli_real_escape_string($db,$_POST['director']);
+   $urlTrailer = filter_var($_POST['trailer'],FILTER_SANITIZE_URL);
   
    $generos = getGenerosSeleccionados($_POST['generos']);
  
-   $errores = getErrores($titulo,$descripcion,$lanzamiento,$duracion,$director,$_FILES['imagen']['tmp_name'],$generos);
+   $errores = getErrores($titulo,$descripcion,$lanzamiento,$duracion,$director,$_FILES['imagen']['tmp_name'],$trailer,$generos);
 
    if(empty($errores)){
    
@@ -91,23 +103,13 @@ function borrarGeneros($id,$db,$generos){
 
 }
 
-function insertGP($db,$id,$generos){
-
-    foreach ($generos as $genero) {
-      
-        $sql = "INSERT INTO generos_peliculas(idGenero,idPelicula) VALUES('$genero','$id')";
-        $resultado = mysqli_query($db,$sql);
-
-    }
-
-}
 
 
 
 ?>
 
 
-
+</header>
 
 <section class="contenedor actualizar-pelicula" style=" background-color:#02040c;">
 <h2 style=" text-align:center;">Actualizar Pelicula</h2>
