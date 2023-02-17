@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+require  __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__); //CARGAMOS LA SUPERGLOBAL CON LOS DATOS OTORGADOS EN ARCHIVO .ENV
 $dotenv->safeLoad(); //EN CASO DE QUE FALLE, QUE NO NOS ARROJE ERROR
 
@@ -13,14 +13,25 @@ function incluirTemplate(string $nombre, $inicio = false){
 
 }
 
-function isAutenticado(){
+function isLogueado(){ //CONTROLA SI INICIO SESSION ALGUIEN
+ 
+    if(!isset($_SESSION)){
+        session_start();
+        return true;
+    }
+  
+    return false;
+}   
 
-    session_start();
-    if(!$_SESSION || $_SESSION == []){
+function controlarUsuario(){ //CONTROLA SI HAY UN USUARIO LOGUEADO
+  session_start();
+    if(!isset($_SESSION['login'])){
         return false;
     }
     return true;
-}   
+}
+
+
 
 
 function debuguear($array){
@@ -105,11 +116,19 @@ function getErrores($titulo,$descripcion,$lanzamiento,$duracion,$director,$image
         }
     
     }
+
+
+    function buscarPelicula($db,$pelicula){ //BUSCA LAS PELICULAS RELACIONADAS A LO QUE PONGAMOS EN EL FORM
+
+        $sql = "SELECT p.id,p.nombre,p.imagen,p.descripcion from peliculas as p where p.nombre like '%$pelicula%'";
+        $resultado = mysqli_query($db,$sql);
+        return $resultado;
+    }
     
 
 
     define('CARPETA_IMAGENES',__DIR__ . '/../imagenes/');
-    define('CARPETA_BUILD', __DIR__ . './../build/img/' );
+    define('CARPETA_BUILD', __DIR__ . '/../build/img/' );
 
     
  

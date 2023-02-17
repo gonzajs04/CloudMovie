@@ -1,7 +1,7 @@
 <?php
-include __DIR__ . '/includes/config/database.php';
+include './includes/config/database.php';
 
-include __DIR__ .'/includes/funciones.php';
+include './includes/funciones.php';
 incluirTemplate('header');
 $db = conectarDB();
 

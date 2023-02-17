@@ -1,11 +1,12 @@
 <?php
-include __DIR__ . '/includes/funciones.php';
-include __DIR__ . '/includes/config/database.php';
+include  './includes/funciones.php';
+include './includes/config/database.php';
 incluirTemplate('header');
 $db = conectarDB();
 
+if($_POST != []){
 $pelicula = mysqli_real_escape_string($db,$_POST['search_movie']);
-
+}
 
 ?>
 
@@ -27,14 +28,23 @@ $pelicula = mysqli_real_escape_string($db,$_POST['search_movie']);
 <section class="contenedor peliculas">
     <div class="container-peliculas">
        <?php 
-       $sql = "SELECT p.id,p.nombre,p.imagen,p.descripcion from peliculas as p where p.nombre like '%$pelicula%'";
-       $resultado = mysqli_query($db,$sql);
-       while($peliculas = mysqli_fetch_assoc($resultado)){   include __DIR__ . '/card.php';?>
+      if(isset($pelicula)){
+
+
+        $resultado = buscarPelicula($db,$pelicula);
+       while($peliculas = mysqli_fetch_assoc($resultado)){   include './card.php';?>
 
        
         
 
-      <?php  } ?>
+      <?php  }}else{
+
+                $resultado = buscarPelicula($db,'');
+                while($peliculas = mysqli_fetch_assoc($resultado)){   include './card.php';
+
+            }} ?>
+
+     
     
 
     </div>

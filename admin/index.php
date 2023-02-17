@@ -1,17 +1,20 @@
 <?php
 include __DIR__ . '/../includes/funciones.php';
 include __DIR__ . '/../includes/config/database.php';
+incluirTemplate('header');
+$db = conectarDB();
 
 
+$auth = controlarUsuario();
 
-$auth = isAutenticado(); //CONTROLA SI TENGO UNA SESION ABIERTA
+
 if(!$auth){
     header('Location: /login.php');
 }
 
 
-incluirTemplate('header');
-$db = conectarDB();
+
+
 // $sql = "SELECT p.id,p.nombre, d.nombre_director, d.apellido_director, g.nombre_genero, p.duracion, p.descripcion, p.imagen, p.vistas, p.likes, p.lanzamiento FROM peliculas as p, directores as d, generos as g, generos_peliculas as gp WHERE p.idDirector = d.id AND gp.idPelicula = p.id AND gp.idGenero = g.id GROUP BY p.nombre";
 
 $sql = "SELECT p.id,p.nombre, d.nombre_director, d.apellido_director, p.duracion, p.descripcion, p.imagen, p.vistas, p.likes, p.lanzamiento FROM peliculas as p, directores as d WHERE p.idDirector = d.id ";
@@ -27,12 +30,14 @@ $resultado = mysqli_query($db,$sql);
 
 //SUBIR PAGINA A HOST DE PRUEBA
 
+if($_POST!=[]){ //CONTROLO QUE SE HAYA DADO LA INDICACION DE ELIMINAR UNA PELICULA
+
 $id = filter_var($_POST['pelicula'],FILTER_VALIDATE_INT);
 if($id || $id != ''){
     $sql = "DELETE FROM peliculas where id=$id";
     $resultado2 = mysqli_query($db,$sql);
  
-}
+}}
 
 ?>
 
@@ -60,7 +65,7 @@ if($id || $id != ''){
                 <div class="grid-adminpeli">
                         <p><?php echo sanitizar($pelicula['nombre'] === '' ? '' : $pelicula['nombre']);?></p>
                         <p><?php echo sanitizar ($pelicula['nombre_director'] . $pelicula['apellido_director'] === '' ? '' : $pelicula['nombre_director'] . $pelicula['apellido_director']);?></p>
-                        <p><?php echo sanitizar ($pelicula['nombre_genero'] === '' ? '' : $pelicula['nombre_genero']);?></p>
+                        <p><?php echo sanitizar (isset($pelicula['nombre_genero']) ? $pelicula['nombre_genero']: '' );?></p>
                         <p><?php echo sanitizar ($pelicula['duracion'] === '' ? '' : $pelicula['duracion']);?></p>
                         <p class="p_descripcion-scroll"><?php echo($pelicula['descripcion'] === '' ? '' : $pelicula['descripcion']);?></p>
 

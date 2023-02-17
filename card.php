@@ -6,7 +6,7 @@
 
 
         <div class="destacado""> <!--pelicula 1-->
-                        <a href="/pelicula.php?resultado=<?php echo $peliculas['id'];?>" target="_blank">
+                        <a href="/pelicula.php?resultado=<?php echo isset($peliculas['id']) ? $peliculas['id'] : '';?>" target="_blank">
                         
                         <picture>
                            
@@ -14,14 +14,14 @@
                         $directorio = CARPETA_BUILD . $peliculas['imagen']; //CONTROLO SI EXISTE LA IMAGEN EN BUILD Y SI NO EXISTE QUE ME PONGA LA IMAGEN DE LA CARPETA IMAGENES
                         if(file_exists($directorio)){?>
 
-                         <source srcset="/build/img/<?php echo $peliculas['imagen'];?>" type="image/webp">
-                        <img src="/build/img/<?php echo $peliculas['imagen']; ?>" alt="">
+                         <source srcset="/build/img/<?php echo isset($peliculas['imagen']) ? $peliculas['imagen'] : '';?>" type="image/webp">
+                        <img src="/build/img/<?php echo isset($peliculas['imagen'])? $peliculas['imagen'] : ''; ?>" alt="">
 
                        <?php }?>   
 
                         <?php if(!file_exists($directorio)){?>
-                            <source srcset="/imagenes/<?php echo $peliculas['imagen'];?>" type="image/webp">
-                             <img src="/imagenes/<?php echo $peliculas['imagen']; ?>" alt="">
+                            <source srcset="/imagenes/<?php echo isset($peliculas['imagen']) ? $peliculas['imagen'] : '';?>" type="image/webp">
+                             <img src="/imagenes/<?php echo isset($peliculas['imagen']) ? $peliculas['imagen'] : ''; ?>" alt="">
 
                         <?php }   ?>
                         
@@ -29,12 +29,12 @@
                       
                         </a>
                         <div class="container-texto">
-                             <h3 class=""><?php echo $peliculas['nombre'] ?></h3>
+                             <h3 class=""><?php echo isset($peliculas['nombre']) ? $peliculas['nombre'] : ''; ?></h3>
                                  <hr class="hr_pelis">
               
                    
                                 <div class="container-descripcion">
-                                    <p><?php echo $peliculas['descripcion'];?></p>
+                                    <p><?php echo isset($peliculas['descripcion']) ? $peliculas['descripcion'] : '';?></p>
                                     <button class="btn-mas">Ver mas</button>
 
                                  

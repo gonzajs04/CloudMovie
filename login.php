@@ -5,7 +5,7 @@ include __DIR__ . '/includes/config/database.php';
 $db = conectarDB();
 incluirTemplate('header');
 
-if(!$_POST == []){
+if($_POST != []){
   
     $mail = filter_var($_POST['mail'],FILTER_SANITIZE_EMAIL);
     $pass = filter_var($_POST['pass'],FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -27,10 +27,15 @@ if(!$_POST == []){
             $passVerified = password_verify($pass,$usuario['pass']); //CONTROLA SI EL HASH DE LA BASE DE DATOS, COINCIDE CON LA CONTRASEÑA QUE ESTAMOS PONIENDO
 
             if($passVerified){
-                session_start();
+
+               isLogueado(); //LLAMO A FUNCION PARA  VERIFICAR SI HAY UNA SESSION, INICIADA, EN CASO DE QUE NO, QUE LA INICIE
                 $_SESSION['user'] = $usuario['email'];
                 $_SESSION['login'] = true;
-               header("Location: /admin/index.php");
+              
+           
+                
+              echo "<script>window.location.href='/admin/index.php'</script>";
+
             }else{
                 $errores[]="La password es incorrecta";
             }

@@ -8,6 +8,11 @@ use Intervention\Image\ImageManagerStatic as Image;
 incluirTemplate('header');
 $db = conectarDB();
 
+$auth = controlarUsuario();
+if(!$auth){
+    header('Location: /login.php');
+}
+
 
 $id = filter_var(intval($_GET['pelicula']),FILTER_SANITIZE_NUMBER_INT);
 

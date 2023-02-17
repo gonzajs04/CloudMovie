@@ -1,3 +1,6 @@
+
+
+
 <div class="container-errores">
     <?php if (!empty($errores)) {
         foreach ($errores as $error) { ?>
@@ -29,7 +32,7 @@
         <label for="imagen">Seleccionar imagen</label>
         <input type="file" name="imagen" id="imagen">
 
-        <?php if ($imagen) { ?>
+        <?php if (isset($imagen)) { ?>
             <?php if ($directorio = file_exists(CARPETA_IMAGENES . $imagen)) { ?>
 
                 <img src="/imagenes/<?php echo $imagen ?>" alt="Imagen pelicula" class="imagen-small">
@@ -59,8 +62,8 @@
             <?php $sql = "SELECT * FROM directores";
             $resultado = mysqli_query($db, $sql);
             while ($directores = mysqli_fetch_assoc($resultado)) {   ?>
-                <option value="<?php echo $directores['id']; ?>" <?php echo $director === $directores['id'] ? 'selected' : ''; ?>>
-                    <?php echo $directores['nombre_director'] . ' ' . $directores['apellido_director']; ?>
+                <option value="<?php echo isset($directores['id']); ?>" <?php echo isset($director) === $directores['id'] ? 'selected' : ''; ?>>
+                    <?php echo isset($directores['nombre_director']) . ' ' . isset($directores['apellido_director']); ?>
 
                 </option>
             <?php } ?>

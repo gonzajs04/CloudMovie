@@ -5,6 +5,8 @@ incluirTemplate('header', true);
 
 $db = conectarDB(); //CONECTO EXITOSAMENTE
 
+
+
 //REFORZAR Y AP´RENDER POR CUENTA PROPIA ACTIVE RECORD Y MVC(MODEL VIEW CONTROLLER)
 //aprender a buscar peliculas sin necesidad de apretar enter con un form a traves de POST PARA ESTO APRENDER AJAX PARA COMUNICAR JS CON PHP
 

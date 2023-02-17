@@ -1,9 +1,7 @@
 <?php
+global $_SESSION; //DECLARO LA $_SESSION COMO GLOBAL
 
-$auth = isAutenticado();
-if($auth){
-    session_start();
-}
+$auth = controlarUsuario();
 
 
 $db = conectarDB();
@@ -72,7 +70,7 @@ $resultado = mysqli_query($db,$sql);
             <a href="/login.php">Iniciar Sesion</a> 
             <?php }?> 
 
-            <?php if($auth){ ?> <a href="/cerrar-sesion.php">Cerrar Sesion</a> 
+            <?php if($auth){ ?> <a href="../../cerrar-sesion.php">Cerrar Sesion</a> 
                 <?php }?>
                 <a href="/admin/index.php">Administrador de peliculas</a>
           

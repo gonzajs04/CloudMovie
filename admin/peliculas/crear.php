@@ -6,6 +6,14 @@ include __DIR__ . '/../../includes/config/database.php';
 use Intervention\Image\ImageManagerStatic as Image;
 $db = conectarDB();
 incluirTemplate('header');
+$auth = controlarUsuario();
+
+if(!$auth){
+    header('Location: /login.php');
+}
+
+
+
 $errores=[];
 if($_POST != []){
   
